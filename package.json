@@ -1,10 +1,20 @@
 {
   "name": "replace-keywords",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Automatically replace keywords in contenteditable elements",
   "main": "lib/index.js",
   "browser": "lib/index.js",
-  "keywords": ["replace", "keywords", "contenteditable", "html"],
+  "keywords": [
+    "front-end",
+    "browser",
+    "editor",
+    "wysiwyg",
+    "replace",
+    "keywords",
+    "contenteditable",
+    "html",
+    "regex"
+  ],
   "scripts": {
     "build": "tsc && rollup -c"
   },
@@ -22,5 +32,7 @@
   "files": [
     "types",
     "lib"
-  ]
+  ],
+  "types": "types/index.d.ts",
+  "repository": "JH1ller/replace-keywords"
 }
