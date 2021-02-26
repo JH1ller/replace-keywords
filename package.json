@@ -1,0 +1,26 @@
+{
+  "name": "replace-keywords",
+  "version": "0.0.1",
+  "description": "Automatically replace keywords in contenteditable elements",
+  "main": "lib/index.js",
+  "browser": "lib/index.js",
+  "keywords": ["replace", "keywords", "contenteditable", "html"],
+  "scripts": {
+    "build": "tsc && rollup -c"
+  },
+  "author": "Justin Hiller <justin@hiller-family.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "eslint": "^7.20.0",
+    "rollup": "^2.39.1",
+    "rollup-plugin-dts": "^2.0.1",
+    "typescript": "^4.2.2"
+  },
+  "files": [
+    "types",
+    "lib"
+  ]
+}
