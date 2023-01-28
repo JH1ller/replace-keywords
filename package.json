@@ -1,0 +1,18 @@
+{
+  "name": "replace-keywords",
+  "private": true,
+  "version": "0.0.4",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "happy-dom": "^8.2.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.0.0",
+    "vitest": "^0.28.3"
+  }
+}
