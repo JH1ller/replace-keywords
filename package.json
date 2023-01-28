@@ -1,6 +1,6 @@
 {
   "name": "replace-keywords",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Automatically replace keywords in contenteditable elements",
   "main": "lib/index.js",
   "browser": "lib/index.js",

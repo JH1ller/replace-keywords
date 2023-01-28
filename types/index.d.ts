@@ -4,7 +4,7 @@ interface RKConfig {
 declare type TransformationQuery = string | RegExp;
 interface Transformation {
     query: TransformationQuery;
-    value: string | ((word: string, query: TransformationQuery) => string);
+    value: string | ((word: string, query: TransformationQuery, matches?: RegExpMatchArray) => string);
     appendSpace?: boolean;
 }
 

@@ -11,6 +11,16 @@ export default class ReplaceKeywords {
   }
 
   attach(element: HTMLElement): void {
+    if (!(element instanceof HTMLElement)) {
+      console.error("Element must be of type 'HTMLElement'.");
+      return;
+    }
+    if (element.contentEditable !== 'true') {
+      console.error(
+        'Element does not have \'contenteditable="true"\' attribute.'
+      );
+      return;
+    }
     if (this._element) {
       this.detach();
     }
@@ -40,18 +50,17 @@ export default class ReplaceKeywords {
     const lastWord = this.getLastWordInText(precedingText);
 
     for (const { query, value, appendSpace } of this._config.transformations) {
-      let replaceContent =
-        typeof value === 'function' ? value(lastWord, query) : value;
-
-      if (appendSpace ?? true) {
-        replaceContent += '\xA0';
-      }
-
+      const isRegexp = query instanceof RegExp;
       const startPos = precedingText.length - lastWord.length;
-      if (
-        (query instanceof RegExp && query.test(lastWord)) ||
-        query === lastWord
-      ) {
+      const matches = isRegexp ? lastWord.match(query) : undefined;
+
+      if (matches || (query === lastWord && !isRegexp)) {
+        let replaceContent =
+          typeof value === 'function' ? value(lastWord, query, matches) : value;
+
+        if (appendSpace ?? true) {
+          replaceContent += '\xA0';
+        }
         this.replaceHtml(replaceContent, startPos, startPos + lastWord.length);
 
         const replaceEvent: ReplaceEvent = new CustomEvent('replace', {
