@@ -1,6 +1,5 @@
 {
   "name": "replace-keywords",
-  "private": true,
   "version": "0.0.4",
   "type": "module",
   "author": "Justin Hiller <justin@hiller-family.com>",
