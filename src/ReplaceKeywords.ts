@@ -2,11 +2,11 @@ import { RKConfig, Transformation } from './types/Config';
 import { ReplaceEvent } from './types/Event';
 
 export default class ReplaceKeywords {
-  private _element: HTMLElement | null;
-  private _config: RKConfig;
+  element?: HTMLElement;
+  config: RKConfig;
 
   constructor(element: HTMLElement, config: RKConfig) {
-    this._config = config;
+    this.config = config;
     this.attach(element);
   }
 
@@ -21,38 +21,38 @@ export default class ReplaceKeywords {
       );
       return;
     }
-    if (this._element) {
+    if (this.element) {
       this.detach();
     }
     element.addEventListener('keyup', () => this.keyupHandler());
-    this._element = element;
+    this.element = element;
   }
 
   detach(): void {
-    if (this._element) {
-      this._element.removeEventListener('keyup', () => this.keyupHandler());
-      this._element = null;
+    if (this.element) {
+      this.element.removeEventListener('keyup', () => this.keyupHandler());
+      this.element = undefined;
     } else {
       console.warn('Detach failed, element is not attached');
     }
   }
 
   get transformations(): Transformation[] {
-    return this._config.transformations ?? [];
+    return this.config.transformations ?? [];
   }
 
   set transformations(transformations: Transformation[]) {
-    this._config.transformations = transformations;
+    this.config.transformations = transformations;
   }
 
   private keyupHandler() {
     const precedingText = this.getPrecedingText();
     const lastWord = this.getLastWordInText(precedingText);
 
-    for (const { query, value, appendSpace } of this._config.transformations) {
+    for (const { query, value, appendSpace } of this.config.transformations) {
       const isRegexp = query instanceof RegExp;
       const startPos = precedingText.length - lastWord.length;
-      const matches = isRegexp ? lastWord.match(query) : undefined;
+      const matches = isRegexp ? lastWord.match(query) : null;
 
       if (matches || (query === lastWord && !isRegexp)) {
         let replaceContent =
@@ -71,7 +71,7 @@ export default class ReplaceKeywords {
           },
         });
 
-        this._element.dispatchEvent(replaceEvent);
+        this.element!.dispatchEvent(replaceEvent);
       }
     }
   }
@@ -90,12 +90,13 @@ export default class ReplaceKeywords {
     const element = document.createElement('div');
     element.innerHTML = html;
     const frag = document.createDocumentFragment();
-    let node: ChildNode, lastNode: ChildNode;
+    let node: ChildNode | null, lastNode: ChildNode;
     while ((node = element.firstChild)) {
       lastNode = frag.appendChild(node);
     }
     range.insertNode(frag);
 
+    //@ts-ignore
     if (lastNode) {
       range = range.cloneRange();
       range.setStartAfter(lastNode);

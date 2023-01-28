@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <style>
+    #textbox {
+      background-color: #d3d3d3;
+      padding: 24px;
+      border-radius: 8px;
+      font-family: sans-serif;
+      font-size: 1.5rem;
+      color: #222222;
+    }
+  </style>
+  <body>
+    <div id="textbox" contenteditable="true"></div>
+
+    <script type="module">
+      import ReplaceKeywords from '/src/index.ts';
+      const element = document.querySelector('#textbox');
+      const cfg = {
+        transformations: [
+          {
+            query: 'car',
+            value: 'carpet',
+          },
+          {
+            query:
+              /(?:https?:\/\/)(?:[\w-])+\.{1}([a-zA-Z]{2,63})(?:[/\w-]*)*\/?\??(?:[^#\n\r]*)?#?(?:[^\n\r]*)/,
+            value: (word, query, matches) =>
+              `<span>${word}, ${query}, ${matches.join(', ')}`,
+          },
+        ],
+      };
+      const rk = new ReplaceKeywords(element, cfg);
+
+      console.log(rk.transformations);
+    </script>
+  </body>
+</html>
